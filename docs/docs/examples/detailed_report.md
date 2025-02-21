@@ -51,6 +51,7 @@ from fastapi import WebSocket
 from gpt_researcher.utils.enum import Tone
 from backend.report_type import DetailedReport
 
+
 async def generate_report(websocket: WebSocket):
     detailed_report = DetailedReport(
         query="The impact of artificial intelligence on modern healthcare",

@@ -9,7 +9,7 @@ from gpt_researcher.document.document import DocumentLoader
 from backend.utils import write_md_to_pdf, write_md_to_word, write_text_to_md
 from pathlib import Path
 from datetime import datetime
-from fastapi import HTTPException
+from fastapi import HTTPException, WebSocket
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -232,6 +232,7 @@ async def execute_multi_agents(manager) -> Any:
         return {"report": report}
     else:
         return JSONResponse(status_code=400, content={"message": "No active WebSocket connection"})
+
 
 
 async def handle_websocket_communication(websocket, manager):

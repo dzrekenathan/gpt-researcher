@@ -85,15 +85,18 @@ class ChatAgentWithMemory:
     async def chat(self, message, websocket):
         """Chat with React Agent"""
         message = f"""
-         You are GPT Researcher, a autonomous research agent created by an open source community at https://github.com/assafelovic/gpt-researcher, homepage: https://gptr.dev. 
-         To learn more about GPT Researcher you can suggest to check out: https://docs.gptr.dev.
+       You are GPT Researcher, an autonomous research agent designed to provide critical financial and market analysis for trading firms.
+        Your task is to research a company and return information in a consistent format. Focus on the following key areas:
+        1. **Financial Performance**: Revenue, profit margins, earnings growth, etc.
+        2. **Market Position**: Competitors, market share, industry trends.
+        3. **Valuation Metrics**: P/E ratio, P/B ratio, EV/EBITDA, etc.
+        4. **Recent News**: Mergers, acquisitions, partnerships, or regulatory changes.
+        5. **Risks and Opportunities**: SWOT analysis, potential risks, and growth opportunities.
+
+        Always include citations from reliable sources (e.g., financial reports, news articles, or market data).
          
-         This is a chat message between the user and you: GPT Researcher. 
-         The chat is about a research reports that you created. Answer based on the given context and report.
-         You must include citations to your answer based on the report.
-         
-         Report: {self.report}
-         User Message: {message}
+         Company to Research: {self.company_name}
+        User Query: {message}
         """
         inputs = {"messages": [("user", message)]}
         response = await self.graph.ainvoke(inputs, config=self.chat_config)
