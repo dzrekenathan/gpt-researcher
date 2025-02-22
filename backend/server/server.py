@@ -99,6 +99,10 @@ def startup_event():
 # Routes
 
 
+@app.get("/health")
+def health_check():
+    return {"status": "healthy", "message": "The API is up and running."}
+
 @app.get("/")
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "report": None})
@@ -141,7 +145,8 @@ async def handle_prompt(
     prompt: str,
     tone: str = "Objective",  # Default tone
     report_source: str = "local",  # Default report source
-    tavily_api_key: Optional[str] = None  # Optional Tavily API key
+    tavily_api_key: Optional[str] = None , # Optional Tavily API key
+    open_ai_key: Optional[str] = None  # Optional OpenAI API key
 ):
     """
     Endpoint to handle a prompt and return a direct response.
@@ -161,6 +166,9 @@ async def handle_prompt(
         # If the user provides a Tavily API key, update the environment variables
         if tavily_api_key:
             os.environ["TAVILY_API_KEY"] = tavily_api_key
+
+        if open_ai_key:
+            os.environ["OPENAI_API_KEY"] = open_ai_key
 
         # Use the existing logic to generate a response
         response = await manager.generate_response(
